@@ -12,15 +12,15 @@ const ArticlePage = () => {
             <NotFoundPage />
         )
     }
-  return (
-    <>
-        <h1>{article.title}</h1>
-        <h3>{article.name}</h3>
-        {article.content.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-        ))}
-    </>
-  )
+    return (
+        <>
+            <h1>{article.title}</h1>
+            <h3>{article.name}</h3>
+            {article.content.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+            ))}
+        </>
+    )
 }
 
 export default ArticlePage
