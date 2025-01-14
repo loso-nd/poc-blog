@@ -1,27 +1,35 @@
 import express from "express";
-import { MongoClient } from "mongodb";
-
-// Temporary in memory database
-// Define e an array of objects, each of which is going to represent a different article and keep
-// track of how many upvotes that article has.
-const articleInfo = [{
-    name: 'learn-react',
-        upvotes: 0,
-            comments: [],
-},
-{
-    name: 'learn-node',
-        upvotes: 0,
-            comments: [],
-},
-{
-    name: 'mongodb',
-        upvotes: 0,
-            comments: [],
-}];
+import { MongoClient } from 'mongodb';
 
 const app = express();
 app.use(express.json());
+
+/**
+ * In lieu of db in memory we are to ging to connect to db and make queries to the db we created ( react-poc-blog)
+ * Create a new endpoint to allow our cient side to actually load the information for a give article
+ * We need to know how my upvotes & comments an article has so we can display them
+ */
+app.get('/api/articles/:name', async (req, res) => {
+    // get value of the url param
+    const { name } = req.params;
+
+    // connecting to the mongodb instance we have running
+    const client = new MongoClient('mongodb://127.0.0.1:27017');
+    await client.connect();
+
+    // Retrieve the specific db the we created and reference to it
+    const db = client.db('react-poc-blog');
+
+    // Passing a collection of articles and findOne({}) allows us to find a single document inside the mongoDb collection
+    const article = await db.collection('articles').findOne({ name });
+
+    // Check to see if the article exist and if it does we will retrieve the aricle else 404
+    if (article) {
+        res.json(article);
+    } else {
+        res.sendStatus(404);
+    }
+});
 
 //PUT
 app.put('/api/articles/:name/upvote', (req, res) => {
@@ -66,24 +74,4 @@ app.post('/api/articles/:name/comments', (req, res) => {
 
 app.listen(8000, () => {
     console.log("Server is listening on port 8000")
-})
-
-/**
- * Ex. endpoint calls
- * localhost:3000/articles/learn-node
- * 
- * GET Request
- * How to specify we want a url param request in the route
-        app.get("/hello/:name", (req, res) => {
-            console.log(req.params)
-            const { name } = req.params;
-            res.send(`Hello ${name}!!`);
-        });
- * 
- * 
- * POST Request
-        app.post("/hello", (req, res) => {
-            res.send(`Hello ${req.body.name}!`);
-        });
- *
- *  */ 
+});
