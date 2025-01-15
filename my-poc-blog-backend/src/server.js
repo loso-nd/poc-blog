@@ -40,8 +40,7 @@ app.put('/api/articles/:name/upvote', async (req, res) => {
 
     // check if article exist
     if (article) {
-        const total = `${article.upvotes} <= 1` ? `${article.upvotes}  upvotes` : `${article.upvotes} upvote!!`
-        res.send(`The ${name} article now has ${total}... Read Now!`)
+        res.json(article)
     } else {
         res.send(`That article doesn\'t exist`);
     }

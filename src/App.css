@@ -99,10 +99,11 @@ textarea {
   width: 320px;
 }
 
-#upvotes-section button,
+.upvotes-section button,
 p {
   display: inline-block;
   margin-right: 16px;
+  padding-top: 16px;
 }
 
 .comment {
