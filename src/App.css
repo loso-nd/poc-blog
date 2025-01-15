@@ -68,9 +68,13 @@ nav a:hover {
   border-bottom: 2px solid black;
 }
 
+.article-page {
+  margin-bottom: 22px;
+}
+
 #add-comment-form {
   border-bottom: 2px solid black;
-  padding: 16px;
+  padding: 16px 16px 50px 16px;
 }
 
 #add-comment-form h3 {
