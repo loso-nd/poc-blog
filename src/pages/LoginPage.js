@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
@@ -9,8 +9,6 @@ const LoginPage = () => {
 
     const navigate = useNavigate();
 
-
-
     const logIn = async () => {
         try {
             await signInWithEmailAndPassword(getAuth(), email, password);
@@ -18,7 +16,6 @@ const LoginPage = () => {
         } catch (error) {
             setError(error.message)
         }
-
     }
 
   return (
